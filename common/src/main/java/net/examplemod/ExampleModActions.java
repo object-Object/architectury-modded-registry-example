@@ -8,11 +8,14 @@ import at.petrak.hexcasting.api.casting.math.HexPattern;
 import at.petrak.hexcasting.common.lib.HexRegistries;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 
 public class ExampleModActions {
+    public static final ResourceKey<Registry<ActionRegistryEntry>> KEY = HexRegistries.ACTION;
     public static final DeferredRegister<ActionRegistryEntry> ACTIONS = DeferredRegister.create(
         ExampleMod.MOD_ID,
-        HexRegistries.ACTION
+        KEY
     );
 
     public static final RegistrySupplier<ActionRegistryEntry> EXAMPLE_ACTION = ACTIONS.register(

@@ -2,12 +2,9 @@ package net.examplemod.forge;
 
 import dev.architectury.platform.forge.EventBuses;
 import net.examplemod.ExampleMod;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.NewRegistryEvent;
+import net.minecraftforge.registries.RegisterEvent;
 
 @Mod(ExampleMod.MOD_ID)
 public class ExampleModForge {
@@ -16,6 +13,12 @@ public class ExampleModForge {
         var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         EventBuses.registerModEventBus(ExampleMod.MOD_ID, modEventBus);
         ExampleMod.init();
-        modEventBus.addListener((NewRegistryEvent event) -> ExampleMod.initRegistries());
+        ExampleMod.getDeferredRegisters().forEach((key, register) -> {
+            modEventBus.addListener((RegisterEvent event) -> {
+                if (event.getRegistryKey().equals(key)) {
+                    register.register();
+                }
+            });
+        });
     }
 }

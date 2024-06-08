@@ -7,6 +7,6 @@ public class ExampleModFabric implements ModInitializer {
     @Override
     public void onInitialize() {
         ExampleMod.init();
-        ExampleMod.initRegistries();
+        ExampleMod.getDeferredRegisters().forEach((key, register) -> register.register());
     }
 }
